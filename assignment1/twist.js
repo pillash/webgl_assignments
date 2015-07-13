@@ -42,6 +42,14 @@ function update() {
     var subDivFactor = parseInt(document.getElementById("subDivFactor").value);
     var degreesOfRotation = parseFloat(document.getElementById("degreesOfRotation").value);
     var twistFactor = parseFloat(document.getElementById("twistFactor").value);
+    var renderType = "";
+    var radios = document.getElementsByName("renderType");
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            renderType = radios[i].value;
+            break;
+        }
+    }
 
     //
     //  Initialize our data for the Sierpinski Gasket
@@ -67,8 +75,16 @@ function update() {
     gl.uniform1f(degOfRotationShader, degreesOfRotation);
     gl.uniform1f(twistFactorShader, twistFactor);
 
-    //render(points);
-    renderWireframe(points);
+    switch (renderType) {
+        case "wireFrame":
+            renderWireframe(points);
+            break;
+        case "fill":
+            render(points);
+            break;
+        default:
+            render(points);
+    }
 }
 
 function triangle(points, a, b, c )
