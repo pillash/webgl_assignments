@@ -80,7 +80,6 @@ function triangle(points, a, b, c )
 
 function divideTriangle(points, a, b, c, count )
 {
-
     // check for end of recursion
 
     if ( count === 0 ) {
@@ -102,18 +101,6 @@ function divideTriangle(points, a, b, c, count )
         divideTriangle(points, c, ac, bc, count );
         divideTriangle(points, b, bc, ab, count );
         divideTriangle(points, ab, bc, ac, count );
-    }
-}
-
-function rotatePoints(p, degrees, twistFactor) {
-    var rad = radians(degrees);
-    for (var i = 0; i < p.length; i++) {
-        var p_x = p[i][0];
-        var p_y = p[i][1];
-        var d = twistFactor * Math.sqrt(p_x*p_x + p_y*p_y);
-        var new_x = p_x*Math.cos(d*rad) - p_y*Math.sin(d*rad);
-        var new_y = p_x*Math.sin(d*rad) + p_y*Math.cos(d*rad);
-        p[i] = vec2(new_x, new_y);
     }
 }
 
