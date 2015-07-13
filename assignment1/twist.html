@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>Triangle Twist</title>
+
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+attribute vec4 vPosition;
+uniform float degreesOfRotation;
+uniform float twistFactor;
+
+void
+main()
+{
+    float rad = radians(degreesOfRotation);
+    float oldX = vPosition[0];
+    float oldY = vPosition[1];
+    float d = twistFactor * sqrt(oldX*oldX + oldY*oldY);
+    float newX = oldX*cos(d*rad) - oldY*sin(d*rad);
+    float newY = oldX*sin(d*rad) + oldY*cos(d*rad);
+    gl_Position = vec4(newX, newY, vPosition[2], vPosition[3]);
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+
+void
+main()
+{
+    gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="twist.js"></script>
+</head>   
+
+<body>
+<div style="margin: 0 auto; width: 512px;">
+<div style="margin-top: 30px; margin-bottom: 30px;">
+    <table>
+        <tr>
+            <td><label for="subDivFactor"># of sub divisions:</label></td>
+            <td><input id="subDivFactor" type="text" value="8"><br></td>
+        </tr>
+        <tr>
+            <td><label for="degreesOfRotation">Degrees of Rotation:</label></td>
+            <td><input id="degreesOfRotation" type="text" value="30"><br></td>
+        </tr>
+        <tr>
+            <td><label for="twistFactor">Twist factor:</label></td>
+            <td><input id="twistFactor" type="text" value="3"><br></td>
+        </tr>
+    </table>
+    <button id="updateButton" type="button">Update</button>
+</div>
+<canvas id="gl-canvas" width="512" height="512">
+Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+</div>
+</body>
+</html>
