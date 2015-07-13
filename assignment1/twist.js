@@ -59,8 +59,6 @@ function update() {
     divideTriangle(points, vertices[0], vertices[1], vertices[2],
                     subDivFactor);
 
-    //rotatePoints(points, degreesOfRotation, twistFactor);
-
     var degOfRotationShader = gl.getUniformLocation(program, "degreesOfRotation");
     var twistFactorShader = gl.getUniformLocation(program, "twistFactor");
 
