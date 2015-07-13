@@ -1,0 +1,48 @@
+body {
+    margin: 0px;
+}
+
+.navBar {
+    background-color: #222;
+    border-color: #080808;
+    border-width: 0 0 1px;
+    border-radius: 0;
+    position: relative;
+    z-index: 1030;
+    min-height: 50px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+}
+
+.navElem {
+    float: left;
+    margin: 0;
+    margin-left: 20px;
+    margin-top:15px;
+}
+
+.navText {
+    color: white;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif
+}
+
+.navList {
+    list-style: none;
+}
+
+.navLink {
+    float: left;
+    position: relative;
+    display: block;
+}
+
+.navLink>a {
+    text-decoration: none;
+}
+
+.footer {
+    width: 100%;
+    text-align: center;
+    height: 50px;
+    margin-top: 30px;
+}
