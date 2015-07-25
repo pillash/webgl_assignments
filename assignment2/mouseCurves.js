@@ -74,8 +74,8 @@ window.onload = function init() {
         }
     };
 
-    canvas.addEventListener("mousedown", function() {
-        var p = getClipCoords(event);
+    canvas.addEventListener("mousedown", function(ev) {
+        var p = getClipCoords(ev);
 
         gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
         gl.bufferSubData(gl.ARRAY_BUFFER, vec2Size*overallIndex, flatten(p));
@@ -92,12 +92,12 @@ window.onload = function init() {
         gl.bufferSubData(gl.ARRAY_BUFFER, vec4Size*overallIndex, flatten(currentColor));
     });
 
-    canvas.addEventListener("mousemove", function() {
+    canvas.addEventListener("mousemove", function(ev) {
         if (!drawing) {
             return;
         }
 
-        var p = getClipCoords(event);
+        var p = getClipCoords(ev);
         gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
         gl.bufferSubData(gl.ARRAY_BUFFER, vec2Size*overallIndex, flatten(p));
         overallIndex++;
@@ -109,8 +109,8 @@ window.onload = function init() {
         render();
     });
 
-    canvas.addEventListener("mouseup", function() {
-        var p = getClipCoords(event);
+    canvas.addEventListener("mouseup", function(ev) {
+        var p = getClipCoords(ev);
 
         gl.bindBuffer( gl.ARRAY_BUFFER, bufferId );
         gl.bufferSubData(gl.ARRAY_BUFFER, vec2Size*overallIndex, flatten(p));
