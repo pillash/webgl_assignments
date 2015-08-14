@@ -6,7 +6,7 @@ window.onload = function init()
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
     gl.viewport( 0, 0, canvas.width, canvas.height );
-    gl.clearColor( 1.0, 1.0, 1.0, 1.0 );
+    gl.clearColor( 0.0, 0.0, 0.0, 1.0 );
 
     gl.enable(gl.DEPTH_TEST);
 
@@ -17,8 +17,9 @@ window.onload = function init()
     gl.useProgram( program );
 
     //var points = spherePoints();
-    //var points = generateCone();
-    var points = generateCylinder();
+    var points = generateCone();
+    //var points = generateCylinder();
+    var transformationMatrix = createTransformationMatrix({'x': 30, 'y':0, 'z':30}, {'x':.2, 'y':.2, 'z':0}, {'x':1.0, 'y':1.0, 'z':1.0});
 
     var vBuffer = gl.createBuffer();
     gl.bindBuffer( gl.ARRAY_BUFFER, vBuffer );
@@ -27,6 +28,9 @@ window.onload = function init()
     var vPosition = gl.getAttribLocation( program, "vPosition" );
     gl.vertexAttribPointer( vPosition, 4, gl.FLOAT, false, 0, 0 );
     gl.enableVertexAttribArray( vPosition );
+
+    var transMatrixUniform = gl.getUniformLocation(program, "transformationMatrix");
+    gl.uniformMatrix4fv(transMatrixUniform, false, flatten(transformationMatrix));
 
     renderWireframe(points.length);
 }
@@ -38,11 +42,30 @@ function renderWireframe(numPoints) {
     }
 }
 
+function createTransformationMatrix(rotation, translation, scale) {
+    var m = mat4();
+    var xRotDegrees = rotation['x'];
+    var yRotDegrees = rotation['y'];
+    var zRotDegrees = rotation['z'];
+
+    var xRotMatrix = rotate(xRotDegrees, [1, 0, 0]);
+    var yRotMatrix = rotate(yRotDegrees, [0, 1, 0]);
+    var zRotMatrix = rotate(zRotDegrees, [0, 0, 1]);
+
+    var rotationMatrix = mult(mult(xRotMatrix, yRotMatrix), zRotMatrix);
+
+    var scaleMatrix = scalem(scale['x'], scale['y'], scale['z']);
+
+    var translateMatrix = translate(translation['x'], translation['y'], translation['z']);
+
+    return mult(translateMatrix, mult(scaleMatrix, rotationMatrix));
+}
+
 function generateCylinder() {
-    var height = 1;
+    var height = .5;
     var topY = .5;
     var bottomY = topY - height;
-    var radius = .5;
+    var radius = .2;
 
     var topCircle = generateCircle(radius, topY);
     var bottomCircle = generateCircle(radius, bottomY);
@@ -56,8 +79,8 @@ function generateCylinder() {
 
 function generateCone() {
     var tip = vec4(0, .5, 0, 1);
-    var radius = .5;
-    var height = 1;
+    var radius = .3;
+    var height = .5;
 
     var theta = 0;
     var y = tip[1] - height;
