@@ -1,5 +1,6 @@
 body {
     margin: 0px;
+	font-family: "Segoe UI", Arial, sans-serif
 }
 
 .navBar {
@@ -56,4 +57,8 @@ body {
 	border: black solid 2px;
 	padding: 20px;
 	box-sizing: border-box;
+}
+
+.slider {
+	padding: 0 0;
 }

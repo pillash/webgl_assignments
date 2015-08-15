@@ -92,95 +92,82 @@ window.onload = function init()
         renderAll(renderOptionsList);
     });
 
+    var changeRotation = function (axis, value) {
+        document.getElementById(axis+"RotationOutput").value = value;
+        var renderOptions = renderOptionsList[currentRenderIndex];
+        if (!renderOptions) {
+            return;
+        }
+
+        renderOptions.rotation[axis] = value;
+        renderAll(renderOptionsList);
+    };
+
+    // the "change" event listener is needed for IE 11
     document.getElementById("xRotation").addEventListener("input", function (e) {
-        document.getElementById("xRotationOutput").value = e.target.value;
-        var renderOptions = renderOptionsList[currentRenderIndex];
-        if (!renderOptions) {
-            return;
-        }
-
-        renderOptions.rotation.x = e.target.value;
-        renderAll(renderOptionsList);
+        changeRotation("x", e.target.value);
     });
+
+    document.getElementById("xRotation").addEventListener("change", function (e) {
+        changeRotation("x", e.target.value);
+    });
+
     document.getElementById("yRotation").addEventListener("input", function (e) {
-        document.getElementById("yRotationOutput").value = e.target.value;
-        var renderOptions = renderOptionsList[currentRenderIndex];
-        if (!renderOptions) {
-            return;
-        }
-
-        renderOptions.rotation.y = e.target.value;
-        renderAll(renderOptionsList);
+        changeRotation("y", e.target.value);
     });
+
+    document.getElementById("yRotation").addEventListener("change", function (e) {
+        changeRotation("y", e.target.value);
+    });
+
     document.getElementById("zRotation").addEventListener("input", function (e) {
-        document.getElementById("zRotationOutput").value = e.target.value;
+        changeRotation("z", e.target.value);
+    });
+    document.getElementById("zRotation").addEventListener("change", function (e) {
+        changeRotation("z", e.target.value);
+    });
+
+    var changeScale = function(value) {
         var renderOptions = renderOptionsList[currentRenderIndex];
         if (!renderOptions) {
             return;
         }
 
-        renderOptions.rotation.z = e.target.value;
-        renderAll(renderOptionsList);
-    });
-
-    var changeScale = function(renderOptions, value) {
         renderOptions.scale.x += value;
         renderOptions.scale.y += value;
         renderOptions.scale.z += value;
+
+        renderAll(renderOptionsList);
     };
 
     document.getElementById("scaleIncreaseButton").addEventListener("click", function (e) {
-        var renderOptions = renderOptionsList[currentRenderIndex];
-        if (!renderOptions) {
-            return;
-        }
-        changeScale(renderOptions, .1);
-        renderAll(renderOptionsList);
+        changeScale(.1);
     });
     document.getElementById("scaleDecreaseButton").addEventListener("click", function (e) {
+        changeScale(-.1);
+    });
+
+    var changeTranslation = function(axis, value) {
         var renderOptions = renderOptionsList[currentRenderIndex];
         if (!renderOptions) {
             return;
         }
-        changeScale(renderOptions, -.1);
+
+        renderOptions.translation[axis] += value;
         renderAll(renderOptionsList);
-    });
+    };
 
     document.getElementById("leftButton").addEventListener("click", function (e) {
-        var renderOptions = renderOptionsList[currentRenderIndex];
-        if (!renderOptions) {
-            return;
-        }
-
-        renderOptions.translation.x -= .1;
-        renderAll(renderOptionsList);
+        changeTranslation("x", -.1);
     });
     document.getElementById("rightButton").addEventListener("click", function (e) {
-        var renderOptions = renderOptionsList[currentRenderIndex];
-        if (!renderOptions) {
-            return;
-        }
-
-        renderOptions.translation.x += .1;
-        renderAll(renderOptionsList);
+        changeTranslation("x", .1);
     });
     document.getElementById("upButton").addEventListener("click", function (e) {
-        var renderOptions = renderOptionsList[currentRenderIndex];
-        if (!renderOptions) {
-            return;
-        }
-
-        renderOptions.translation.y += .1;
-        renderAll(renderOptionsList);
+        changeTranslation("y", .1);
     });
     document.getElementById("downButton").addEventListener("click", function (e) {
-        var renderOptions = renderOptionsList[currentRenderIndex];
-        if (!renderOptions) {
-            return;
-        }
-
-        renderOptions.translation.y -= .1;
-        renderAll(renderOptionsList);
+        changeTranslation("y", -.1);
     });
 }
 
