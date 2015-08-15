@@ -209,6 +209,7 @@ function renderShape(options) {
     gl.uniform4f(colorUniform, color[0], color[1], color[2], color[3]);
     renderSolid(options.points.length);
     
+    // render wireframe in white
     gl.uniform4f(colorUniform, 1.0, 1.0, 1.0, 1.0);
     renderWireframe(options.points.length);
 }
@@ -255,6 +256,7 @@ function generateCylinder() {
 
     var points = [];
     for (var i = 0; i < topCircle.length-1; i++) {
+        // points for 2 triangles connecting the top circle and bottom circle, and 1 triangle each for the top base and bottom base
         points = points.concat([topCircle[i], bottomCircle[i], topCircle[i+1], bottomCircle[i], topCircle[i+1], bottomCircle[i+1], topCircle[i], topCenter, topCircle[i+1], bottomCircle[i], bottomCenter, bottomCircle[i+1]]);
     }
     return points;
@@ -272,6 +274,7 @@ function generateCone() {
 
     var points = [];
     for (var i = 0; i < basePoints.length-1; i++) {
+        // points for 1 triangle connecting the tip to the base, and 1 triangle for the base
         points = points.concat([basePoints[i], tip, basePoints[i+1], basePoints[i], baseCenter, basePoints[i+1]]);
     }
 
@@ -295,6 +298,8 @@ function generateSphere() {
     var inc = 15;
     var r = .15;
 
+    // calculates the points where the lines of latitude and longitude intersect.
+    // These points will be used as vertices for the triangles.
     while (theta <= 90) {
         var row = [];
         phi = 0;
@@ -309,6 +314,8 @@ function generateSphere() {
         theta += inc;
     }
 
+    // For each 4 intersecting lat/long points that form a rectangle, split the rectangle into 2 triangles.
+    // These triangles will be rendered to form the sphere.
     var points = [];
     for (var i = 0; i < rows.length-1; i++) {
         var r1 = rows[i];
