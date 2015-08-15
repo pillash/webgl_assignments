@@ -8,21 +8,26 @@
 <script id="vertex-shader" type="x-shader/x-vertex">
 attribute vec4 vPosition;
 uniform mat4 transformationMatrix;
+uniform vec4 vColor;
 
+varying vec4 fColor;
 void
 main()
 {
     gl_Position = transformationMatrix * vPosition;
+	fColor = vColor;
 }
 </script>
 
 <script id="fragment-shader" type="x-shader/x-fragment">
 precision mediump float;
 
+varying vec4 fColor;
+
 void
 main()
 {
-    gl_FragColor = vec4( 1.0, 0.0, 0.0, 1.0 );
+    gl_FragColor = fColor;
 }
 </script>
 
@@ -41,32 +46,65 @@ main()
     </ul>
     <span style="float: right; margin-right: 20px;" class="navElem navText">By: Ashrith Pillarisetti</span>
 </nav>
-<div style="margin: 0px auto; width: 512px;">
-    <h1>Mouse Curves</h1>
-<div style="margin-top: 30px; margin-bottom: 30px;">
-    <table style="margin-bottom: 10px;">
-        <tr>
-            <td><label for="color">Color</label></td>
-            <td>
-                <select id="color" >
-                    <option value="blue">Blue</option>
-                    <option value="red">Red</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="green">Green</option>
-                    <option value="orange">Orange</option>
-                    <option value="purple">Purple</option>
-                    <option value="white">White</option>
-                </select>
-            </td>
 
-        </tr>
-    </table>
-    <button id="clearButton">Clear</button>
-    <p>Draw anything you want in the black box!</p>
-</div>
-<canvas id="gl-canvas" width="700" height="700">
-Oops ... your browser doesn't support the HTML5 canvas element
-</canvas>
+<div style="width: 1200px; margin: 0 auto;">
+	<h1>CAD Application</h1>
+	<div id="controls" class="verticalControls" style="height: 700px;">
+		<div>
+			<select id="shapeList">
+				<option value="sphere">Sphere</option>
+				<option value="cylinder">Cylinder</option>
+				<option value="cone">Cone</option>
+			</select>
+			<button id="createShape">Create</button>
+		</div>
+		<div>
+			<h3>Choose which shape to edit</h3>
+			<select id="existingShapesList" style="width: 100px; height: 120px;" multiple>
+				
+			</select>
+		</div>
+		<div>
+			<h3>Color</h3>
+			<select id="color" >
+				<option value="blue">Blue</option>
+				<option value="red">Red</option>
+				<option value="green">Green</option>
+				<option value="orange">Orange</option>
+				<option value="purple">Purple</option>
+			</select>
+		</div>
+		<div>
+			<h3>Rotation</h3>
+			<label for="xRotation">Rotation in x-axis</label>
+			<input id="xRotation" type="range" min="0" max="360" step="10" value="0"></input>
+			<input type="text" id="xRotationOutput" size="3" value="0" readonly></input><br/>
+			<label for="xRotation">Rotation in y-axis</label>
+			<input id="yRotation" type="range" min="0" max="360" step="10" value="0"></input>
+			<input type="text" id="yRotationOutput" size="3" value="0" readonly></input><br/>
+			<label for="zRotation">Rotation in z-axis</label>
+			<input id="zRotation" type="range" min="0" max="360" step="10" value="0"></input>
+			<input type="text" id="zRotationOutput" size="3" value="0" readonly></input>
+		</div>
+		<div>
+			<h3>Scale</h3>
+			<button id="scaleIncreaseButton">Increase</button>
+			<button id="scaleDecreaseButton">Decrease</button>
+		</div>
+		<div>
+			<h3>Translation</h3>
+			<button id="leftButton">Left</button>
+			<button id="rightButton">Right</button>
+			<button id="upButton">Up</button>
+			<button id="downButton">Down</button>
+		</div>
+		
+	</div>
+	<div  style="display: inline-block;">
+		<canvas id="gl-canvas" width="700" height="700">
+		Oops ... your browser doesn't support the HTML5 canvas element
+		</canvas>
+	</div>
 </div>
 <footer class="footer">
     <div>

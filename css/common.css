@@ -46,4 +46,14 @@ body {
     text-align: center;
     height: 50px;
     margin-top: 30px;
+	clear: both;
+}
+
+.verticalControls {
+	display: inline-block;
+	vertical-align: top;
+	margin-right: 50px;
+	border: black solid 2px;
+	padding: 20px;
+	box-sizing: border-box;
 }
